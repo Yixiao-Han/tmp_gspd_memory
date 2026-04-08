@@ -1,0 +1,228 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.24",
+    "lastTouchedAt": "2026-04-07T05:02:46.558Z"
+  },
+  "browser": {
+    "enabled": true,
+    "remoteCdpTimeoutMs": 1500,
+    "remoteCdpHandshakeTimeoutMs": 3000,
+    "color": "#FF4500",
+    "executablePath": "/home/sandbox/chrome-headless.sh",
+    "headless": true,
+    "noSandbox": true,
+    "attachOnly": false,
+    "defaultProfile": "openclaw",
+    "profiles": {
+      "openclaw": {
+        "cdpPort": 18800,
+        "color": "#FF4500"
+      },
+      "work": {
+        "cdpPort": 18801,
+        "color": "#0066CC"
+      }
+    }
+  },
+  "models": {
+    "mode": "replace",
+    "providers": {
+      "myprovider": {
+        "baseUrl": "https://lfhagmirror.hwcloudtest.cn:18449/celia-claw/v1/sse-api",
+        "apiKey": "apiKey",
+        "api": "openai-completions",
+        "headers": {
+          "Accept": "text/event-stream",
+          "x-request-from": "openclaw",
+          "x-uid": "260086000244142475",
+          "x-api-key": "SK-19F18392646BED20C41A4C018F23AB58"
+        },
+        "models": [
+          {
+            "id": "LLM_GLM5",
+            "name": "LLM_GLM5",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0.001,
+              "output": 0.002,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 256000,
+            "maxTokens": 6000
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "myprovider/LLM_GLM5"
+      },
+      "models": {
+        "myprovider/LLM_GLM5": {
+          "alias": "llm"
+        }
+      },
+      "workspace": "/home/sandbox/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "heartbeat": {
+        "every": "0m",
+        "isolatedSession": true
+      }
+    }
+  },
+  "tools": {
+    "profile": "full",
+    "deny": [
+      "web_search"
+    ]
+  },
+  "messages": {
+    "queue": {
+      "mode": "steer"
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "dmScope": "per-peer"
+  },
+  "channels": {
+    "xiaoyi-channel": {
+      "wsUrl1": "ws://127.0.0.1:8765/ws/link",
+      "wsUrl2": "wss://lfhagcp.hwcloudtest.cn:58447/openclaw/v1/xiaoyi/ws/link",
+      "apiKey": "SK-19F18392646BED20C41A4C018F23AB58",
+      "agentId": "agent0c18a408653f4ab6a61d38edb782d273",
+      "apiId": "webhook6f94791a554b4b64a45",
+      "pushId": 123456,
+      "uid": "260086000244142475",
+      "enabled": true,
+      "fileUploadUrl": "https://lfhagmirror.hwcloudtest.cn:18449"
+    }
+  },
+  "discovery": {
+    "mdns": {
+      "mode": "off"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "69f29b4acb63611750166083b4b52439595ee3d73cd2d9df"
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": [
+        "~/.openclaw/workspace/skills/",
+        "/home/sandbox/core_skills/"
+      ],
+      "watch": true,
+      "watchDebounceMs": 250
+    }
+  },
+  "plugins": {
+    "slots": {
+      "memory": "memory-gspd",
+      "contextEngine": "context-gspd"
+    },
+    "load": {
+      "paths": [
+        "/home/sandbox/core_plugins/execution-validator-plugin",
+        "/home/sandbox/plugins/memory-plugin",
+        "/home/sandbox/plugins/context-engine-plugin"
+      ]
+    },
+    "entries": {
+      "execution-validator-plugin": { "enabled": true },
+      "xiaoyi-channel": { "enabled": true },
+      "memory-gspd": {
+        "enabled": true,
+        "config": {
+          "serverBinaryPath": "/home/sandbox/plugins/gspd_mcp_server",
+          "vectorDim": 4096,
+          "embed": {
+            "baseUrl": "https://api.fireworks.ai/inference/v1",
+            "apiKey": "fw_6AtiL5tiqhDebXKiWV8acU",
+            "model": "accounts/fireworks/models/qwen3-embedding-8b"
+          },
+          "chat": {
+            "baseUrl": "https://api.fireworks.ai/inference/v1",
+            "apiKey": "fw_6AtiL5tiqhDebXKiWV8acU",
+            "model": "accounts/fireworks/models/glm-5"
+          },
+          "autoRecall": true,
+          "autoCapture": true,
+          "autoLearn": true,
+          "autoInject": true,
+          "enableMerge": true,
+          "enableEvents": true,
+          "topK": 3,
+          "minScore": 0.40,
+          "dedupThreshold": 0.55
+        }
+      },
+      "context-gspd": {
+        "enabled": true,
+        "config": {
+          "serverBinaryPath": "/home/sandbox/plugins/gspd_mcp_server",
+          "vectorDim": 4096,
+          "embed": {
+            "baseUrl": "https://api.fireworks.ai/inference/v1",
+            "apiKey": "fw_6AtiL5tiqhDebXKiWV8acU",
+            "model": "accounts/fireworks/models/qwen3-embedding-8b"
+          },
+          "chat": {
+            "baseUrl": "https://api.fireworks.ai/inference/v1",
+            "apiKey": "fw_6AtiL5tiqhDebXKiWV8acU",
+            "model": "accounts/fireworks/models/glm-5"
+          },
+          "tokenBudget": 30000,
+          "recentTurnsToKeep": 10
+        }
+      }
+    },
+    "installs": {
+      "execution-validator-plugin": {
+        "source": "path",
+        "sourcePath": "/home/sandbox/core_plugins/execution-validator-plugin",
+        "installPath": "/home/sandbox/core_plugins/execution-validator-plugin",
+        "version": "0.1.0",
+        "installedAt": "2026-03-30T15:51:30.561Z"
+      },
+      "xiaoyi-channel": {
+        "source": "archive",
+        "sourcePath": "/home/sandbox/.openclaw/ynhcj-xiaoyi-channel-0.0.63-beta.tgz",
+        "installPath": "/home/sandbox/.openclaw/extensions/xiaoyi-channel",
+        "version": "0.0.63-beta",
+        "installedAt": "2026-04-07T04:06:23.405Z"
+      },
+      "memory-gspd": {
+        "source": "path",
+        "sourcePath": "/home/sandbox/plugins/memory-plugin",
+        "installPath": "/home/sandbox/plugins/memory-plugin",
+        "version": "0.1.0",
+        "installedAt": "2026-04-07T00:00:00.000Z"
+      },
+      "context-gspd": {
+        "source": "path",
+        "sourcePath": "/home/sandbox/plugins/context-engine-plugin",
+        "installPath": "/home/sandbox/plugins/context-engine-plugin",
+        "version": "0.1.0",
+        "installedAt": "2026-04-07T00:00:00.000Z"
+      }
+    }
+  }
+}
